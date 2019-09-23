@@ -7,10 +7,11 @@ const initialState = {
 }
 
 const loginUser = (state, payload) =>{
-    return{
+    console.log(payload.creds.email);
+    return {
         authenticated: true,
         currentUser: payload.creds.email
-    }
+       }
 }
 
 const signOutUser = () =>{

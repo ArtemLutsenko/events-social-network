@@ -8,7 +8,7 @@ const openModal = (state, payload) =>{
     return {modalType, modalProps}
 }
 
-const closeModal = (state) =>{
+const closeModal = () =>{
     return null
 }
 
