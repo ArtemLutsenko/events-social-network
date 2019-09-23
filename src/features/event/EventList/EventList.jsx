@@ -4,6 +4,7 @@ import EventListItem from "./EventListItem";
 class EventList extends Component {
   render() {
     const { events, deleteEvent } = this.props;
+    console.log(events)
     return (
       <Fragment>
         {events.map(event => (
