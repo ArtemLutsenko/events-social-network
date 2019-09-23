@@ -1,42 +1,75 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Menu, Container, Button } from "semantic-ui-react";
 import { NavLink, Link, withRouter } from "react-router-dom";
 import SignedOutMenu from "../Menus/SignedOutMenu";
 import SignedInMenu from "../Menus/SignedInMenu";
+import { openModal } from "../../modals/modalActions";
+import {logout} from '../../auth/authActions'
 
 
+const actions = {
+  openModal,
+  logout
+};
+
+const mapState = (state) =>({
+  auth: state.auth
+})
 class Navbar extends Component {
-  state = {
-    authenticated: true
-  }
-handleSignIn = () => {
-  this.setState({authenticated : true})
-}
 
-handleSignOut = () => {
-  this.setState({authenticated : false})
-  this.props.history.push('/')
-}
+  handleSignIn = () => {
+    console.log("asd")
+    this.props.openModal("LoginModal");
+    
+  };
+
+  handleRegister = () => {
+    console.log("asd")
+    this.props.openModal("RegisterModal");
+  };
+
+  handleSignOut = () => {
+    this.props.logout()
+    this.props.history.push("/");
+  };
 
   render() {
-    const {authenticated} = this.state
+    const {auth} = this.props
+    const { authenticated } = auth.authenticated;
     return (
       <Menu inverted fixed="top">
         <Container>
-          <Menu.Item as = {NavLink} exact to = '/' header>
+          <Menu.Item as={NavLink} exact to="/" header>
             <img src="assets/logo.png" alt="logo" />
             Re-vents
           </Menu.Item>
-          <Menu.Item as = {NavLink} exact to = '/events' name="Events" />
-          <Menu.Item as = {NavLink} to = '/people' name="People" />
+          <Menu.Item as={NavLink} exact to="/events" name="Events" />
+          <Menu.Item as={NavLink} to="/people" name="People" />
           <Menu.Item>
-            <Button as = {Link} to = '/createEvents' floated="right" positive inverted content="Create Event" />
+            <Button
+              as={Link}
+              to="/createEvents"
+              floated="right"
+              positive
+              inverted
+              content="Create Event"
+            />
           </Menu.Item>
-          {authenticated ? <SignedInMenu signOut = {this.handleSignOut}/> : <SignedOutMenu signIn = {this.handleSignIn}/>}
+          {authenticated ? (
+            <SignedInMenu signOut={this.handleSignOut} currentUser = {auth.currentUser}/>
+          ) : (
+            <SignedOutMenu signIn={this.handleSignIn} register = {this.handleRegister}/>
+          )}
         </Container>
       </Menu>
     );
   }
 }
 
-export default withRouter(Navbar);
+export default withRouter(
+  connect(
+    mapState,
+    actions
+  )(Navbar)
+);
