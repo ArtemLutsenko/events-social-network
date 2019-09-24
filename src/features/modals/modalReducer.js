@@ -1,6 +1,7 @@
 import { createReducer } from "../../app/common/util/reducerUtils";
 import { MODAL_OPEN, MODAL_CLOSE } from "./modalConstatnts";
 
+
 const initialState = null;
 
 const openModal = (state, payload) =>{
@@ -9,6 +10,7 @@ const openModal = (state, payload) =>{
 }
 
 const closeModal = () =>{
+
     return null
 }
 
