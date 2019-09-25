@@ -12,18 +12,22 @@ import ScrollToTop from "./app/common/util/ScrollToTop";
 
 const store = configureStore();
 
-ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <ScrollToTop>
-        <ReduxToastr  position ='bottom-right' transitionIn = "fadeIn" transitionOut = "fadeOut"
-        />
-        <App />
-      </ScrollToTop>
-    </BrowserRouter>
-  </Provider>,
-  document.getElementById("root")
-);
+store.firebaseAuthIsReady.then(() =>{
+  ReactDOM.render(
+    <Provider store={store}>
+      <BrowserRouter>
+        <ScrollToTop>
+          <ReduxToastr  position ='bottom-right' transitionIn = "fadeIn" transitionOut = "fadeOut"
+          />
+          <App />
+        </ScrollToTop>
+      </BrowserRouter>
+    </Provider>,
+    document.getElementById("root")
+  );
+})
+
+
 
 serviceWorker.unregister();
 //revent-253605
